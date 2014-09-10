@@ -1,6 +1,6 @@
 #!/usr/bin/ruby -w
 
-require 'profile'
+# require 'profile'
 
 unless ARGV[0]
 
@@ -62,7 +62,7 @@ def get_subs(path)
 
 end
 
-
+puts "Working..."
 
 until @dirs.empty? do
 	
@@ -85,7 +85,7 @@ until @dirs.empty? do
 			# Remove the parent directory from @dirs if it's still there.
 			# This is where the "parent" method from Pathname is crucial.
 			begin
-				@dirs.delete(f.parent) 
+				# @dirs.delete(f.parent) 
 				@dirs.delete(f) 
 			end
 
@@ -94,7 +94,7 @@ until @dirs.empty? do
 			get_subs(f) if File.directory?(f)
 
 			begin
-				@dirs.delete(f.parent) 
+				# @dirs.delete(f.parent) 
 				@dirs.delete(f) 
 			end
 		end
