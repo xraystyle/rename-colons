@@ -1,4 +1,4 @@
-Recursively find and rename files and folders that match a specific pattern
+Recursively find and rename files and folders that match a specific pattern.
 -------------------------------------------------------------------------------
 
 This is a script I wrote to solve a specific problem. I have a file server on which there were a number of files and directories that contained colons in the names. Some were nested within others. 
