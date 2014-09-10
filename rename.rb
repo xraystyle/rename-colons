@@ -1,7 +1,5 @@
 #!/usr/bin/ruby -w
 
-# require 'profile'
-
 unless ARGV[0]
 
 	puts "Needs a directory as a command line argument."
@@ -11,9 +9,9 @@ end
 
 Dir.chdir(ARGV[0])
 
-# Pathmname class gives us access to the "parent" method which is crucial.
+# pathnames make it easier to manage paths,
+# with clear methods to access their attributes.
 require 'pathname'
-
 
 # Set up an empty array to hold directories/pathnames.
 @dirs = []
@@ -34,12 +32,6 @@ end
 # Method that renames a path with colons to the same path, but replacing
 # colons with hyphens.
 def rename_colons(path)
-
-	# sleep 0.5
-	# puts
-	# puts "Renaming #{path}..."
-	# puts
-	# sleep 0.5
 
 	File.rename(File.expand_path(path), File.expand_path(path.to_s.gsub(":", "-")))
 	@renamed += 1
@@ -82,10 +74,8 @@ until @dirs.empty? do
 			# Make sure that everything is a Pathname instance instead of a string.
 			get_subs(Pathname.new(File.expand_path(f.to_s.gsub(":", "-")))) if File.directory?(File.expand_path(f.to_s.gsub(":", "-")))
 
-			# Remove the parent directory from @dirs if it's still there.
-			# This is where the "parent" method from Pathname is crucial.
+			# Remove the entry from the @dirs array
 			begin
-				# @dirs.delete(f.parent) 
 				@dirs.delete(f) 
 			end
 
@@ -94,7 +84,6 @@ until @dirs.empty? do
 			get_subs(f) if File.directory?(f)
 
 			begin
-				# @dirs.delete(f.parent) 
 				@dirs.delete(f) 
 			end
 		end
