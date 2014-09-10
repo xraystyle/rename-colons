@@ -1,5 +1,7 @@
 #!/usr/bin/ruby -w
 
+require 'profile'
+
 unless ARGV[0]
 
 	puts "Needs a directory as a command line argument."
@@ -33,11 +35,11 @@ end
 # colons with hyphens.
 def rename_colons(path)
 
-	sleep 0.5
-	puts
-	puts "Renaming #{path}..."
-	puts
-	sleep 0.5
+	# sleep 0.5
+	# puts
+	# puts "Renaming #{path}..."
+	# puts
+	# sleep 0.5
 
 	File.rename(File.expand_path(path), File.expand_path(path.to_s.gsub(":", "-")))
 	@renamed += 1
@@ -67,7 +69,8 @@ until @dirs.empty? do
 	# Take a directory, look at it.
 	@dirs.each do |f|
 
-		puts "Parsing #{f}..."
+		# system 'clear'
+		# puts "Parsing #{f}..."
 
 		if /.*:+.*/.match(f.to_s)
 
@@ -81,15 +84,19 @@ until @dirs.empty? do
 
 			# Remove the parent directory from @dirs if it's still there.
 			# This is where the "parent" method from Pathname is crucial.
-			@dirs.delete(f.parent) if @dirs.include?(f.parent)
-			@dirs.delete(f) if @dirs.include?(f)
+			begin
+				@dirs.delete(f.parent) 
+				@dirs.delete(f) 
+			end
 
 		else
 			# do the same as above, except without the renaming.
 			get_subs(f) if File.directory?(f)
-			@dirs.delete(f.parent) if @dirs.include?(f.parent)
-			@dirs.delete(f) if @dirs.include?(f)
 
+			begin
+				@dirs.delete(f.parent) 
+				@dirs.delete(f) 
+			end
 		end
 
 	end
