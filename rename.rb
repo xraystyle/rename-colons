@@ -20,7 +20,7 @@ require 'pathname'
 @renamed = 0
 
 
-# Fill it with pathnames fromt the current directory.
+# Fill it with pathnames fromt the given directory.
 Dir['*'].each do |f|
 
 	@dirs << Pathname.new(File.expand_path(f))
@@ -48,9 +48,6 @@ def get_subs(path)
 			next if e.to_s == "."
 			next if e.to_s == ".."
 
-			# puts "Appending #{e} to @dirs..."
-			# gets
-
 			@dirs << Pathname.new(File.expand_path(e))
 
 		end
@@ -59,19 +56,10 @@ end
 
 
 
-
-
-
-
-
 until @dirs.empty? do
 	
 	# Take a directory, look at it.
 	@dirs.each do |f|
-
-		# puts "Checking dir #{f}..."
-		# puts f.class
-		# gets
 
 		if /.*:+.*/.match(f.to_s)
 
@@ -80,6 +68,7 @@ until @dirs.empty? do
 
 			# Find all the entries one level below the dir we're working with,
 			# unless it's a file, keeping in mind that it's been renamed already.
+			# Make sure that everything is a Pathname instance instead of a string.
 			get_subs(Pathname.new(File.expand_path(f.to_s.gsub(":", "-")))) if File.directory?(File.expand_path(f.to_s.gsub(":", "-")))
 
 			# Remove the parent directory from @dirs if it's still there.
@@ -104,47 +93,4 @@ puts
 puts
 puts "#{@renamed} directories with colons renamed."
 
-# Dir["*"].each do |file|
-
-# 	if /.*:+.*/.match(file)
-# 		rename_colons(file)
-# 	end
-
-# end
-
-
-
-
-
-
-
-
-
-
-
-# files = []
-# begin
-
-# 	# Dir["**/*"].each {|f| File.rename(f, f.gsub(":", "-"))}
-# 	Dir["*"].each do |file|
-
-# 		if /.*:+.*/.match(file)
-
-# 			File.rename(file, file.gsub(":", "-"))
-
-# 		end
-
-# 	end
-
-
-
-# 	files = files.sort_by {|x| x.length}.reverse
-
-# 	files.each { |e| puts e }
-# 	# files.each {|f| File.rename f, f.gsub(":", "-")}
-
-# rescue Exception => e
-
-# 	puts "Error: #{e}"
-
-# end
+exit 0
