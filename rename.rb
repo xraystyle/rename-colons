@@ -47,6 +47,7 @@ def get_subs(path)
 
 			next if e.to_s == "."
 			next if e.to_s == ".."
+			next if /.*\._.*/.match e.to_s
 
 			@dirs << Pathname.new(File.expand_path(e))
 
