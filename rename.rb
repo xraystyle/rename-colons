@@ -16,11 +16,11 @@ require 'pathname'
 # Set up an empty array to hold directories/pathnames.
 @dirs = []
 
-# Counter to keep track of the number or renamed entries.
+# Counter to keep track of the number of renamed entries.
 @renamed = 0
 
 
-# Fill it with pathnames fromt the given directory.
+# Fill it with pathnames from the given directory.
 Dir['*'].each do |f|
 
 	@dirs << Pathname.new(File.expand_path(f))
@@ -77,6 +77,12 @@ until @dirs.empty? do
 
 			# Remove the entry from the @dirs array
 			begin
+				# letting the .delete method fail silently if 
+				# 'f' isn't in the array massively increases the
+				# speed of the script, as opposed to checking if it's
+				# there via @dirs.include?(f) first. .include? requires
+				# a brute-force check against every other item in the 
+				# array.
 				@dirs.delete(f) 
 			end
 
