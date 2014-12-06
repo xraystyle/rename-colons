@@ -1,6 +1,6 @@
 #!/usr/bin/ruby -w
 
-require 'pathname'
+require 'pathname'	
 
 Dir.mkdir("testing_dir")
 
@@ -35,14 +35,6 @@ def make_subdirs(path)
 
 	(0..10).each do |i|
 
-		if Dir.glob("**/").count >= 5040
-
-			@dirs.delete(path.parent) if @dirs.include?(path.parent)
-
-			next
-
-		end
-
 		if rand(0..99) >= 75
 
 			rand_dir = Pathname.new(Dir.pwd + "/" + rand(100..9999).to_s + ":" + "abcabc")
@@ -65,18 +57,22 @@ def make_subdirs(path)
 
 	end
 
-	@dirs.delete(path) if @dirs.include?(path)
-	
-end
-
- # (1..2).each do |i|
-
-	# puts "Loop #{i}."
-
-@dirs.each do |d|
-
-	make_subdirs(d)
+	# begin
+		@dirs.delete(path)
+	# end
 
 end
+
+
+while @dir_count <= 10000
 	
-# end
+	@dirs.each do |d|
+
+		make_subdirs(d)
+
+	end
+
+end
+
+
+		

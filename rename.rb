@@ -76,23 +76,22 @@ until @dirs.empty? do
 			get_subs(Pathname.new(File.expand_path(f.to_s.gsub(":", "-")))) if File.directory?(File.expand_path(f.to_s.gsub(":", "-")))
 
 			# Remove the entry from the @dirs array
-			begin
-				# letting the .delete method fail silently if 
-				# 'f' isn't in the array massively increases the
-				# speed of the script, as opposed to checking if it's
-				# there via @dirs.include?(f) first. .include? requires
-				# a brute-force check against every other item in the 
-				# array.
-				@dirs.delete(f) 
-			end
+			
+			# .delete returns nil if 'f' isn't in the array. This
+			# substantially increases the speed of the script, as 
+			# opposed to checking if it's there via @dirs.include?(f) 
+			# first. .include? requires a brute-force check against 
+			# every other item in the array.
+			@dirs.delete(f) 
+			
 
 		else
 			# do the same as above, except without the renaming.
 			get_subs(f) if File.directory?(f)
 
-			begin
-				@dirs.delete(f) 
-			end
+			
+			@dirs.delete(f) 
+			
 		end
 
 	end
